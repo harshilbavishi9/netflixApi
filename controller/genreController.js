@@ -18,9 +18,7 @@ module.exports.create = async (req, res) => {
 module.exports.getMoviesByGenreId = async (req, res) => {
   try {
     const genreId = req.params.id;
-    console.log(genreId);
     const data = await Movie.find({ genre: genreId }).populate('genre').exec();
-    console.log('Found movies:', data);
     res.json({ success: true, data, length: data.length });
   } catch (error) {
     console.error(error);

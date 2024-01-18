@@ -96,10 +96,13 @@ module.exports.create = async (req, res) => {
 module.exports.getAllMovie = async (req, res) => {
   try {
     const movies = await Movie.find();
+    if (movies.length === 0) {
+      res.status(404).json({ sucess: true, message: 'No Movie Found' });
+    }
     res.status(200).json({ sucess: true, data: movies });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 module.exports.getOneMovie = async (req, res) => {
@@ -139,7 +142,7 @@ module.exports.updateMovie = async (req, res) => {
       const imagePaths = req.files.logo.map((image) => image.path.replace(/\\/g, "/"));
       logoUrl = await uploadMultipleImages(
         imagePaths,
-      );
+      );  
     }
 
     // if (req.files.image) {

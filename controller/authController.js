@@ -32,7 +32,6 @@ module.exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id, email: user.email, isAdmin: user.isAdmin }, process.env.JWT_SECRET_KEY, {
       expiresIn: "5d",
     });
-    console.log(user, token);
     return res.status(200).json({ message: "Login successful", user, token });
   } catch (err) {
     console.error("Error during login:", err);
